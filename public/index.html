@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Cafeteria Schedule</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/p5@1.9.3/lib/p5.min.js"></script>
+</head>
+<body>
+  <div class="page">
+    <header class="top-bar">
+      <div class="spacer"></div>
+      <img src="/assets/question_mark.png" alt="Help" class="help-icon" id="help-icon">
+    </header>
+
+    <main class="main">
+      <div class="schedule-wrap">
+        <img src="/assets/schedule.jpg" alt="Schedule" class="schedule">
+        <div class="slot-hint slot-counter-hint" data-hint="Counter" data-align="left"></div>
+        <div class="slot-target slot-counter-target" data-slot="counter">
+          <div class="slot-contents"></div>
+        </div>
+
+        <div class="slot-hint slot-barista-hint" data-hint="Barista" data-align="left"></div>
+        <div class="slot-target slot-barista-target" data-slot="barista">
+          <div class="slot-contents"></div>
+        </div>
+
+        <div class="slot-hint slot-kitchen-hint" data-hint="Kitchen" data-align="left"></div>
+        <div class="slot-target slot-kitchen-target" data-slot="kitchen">
+          <div class="slot-contents"></div>
+        </div>
+
+        <div class="slot-hint slot-floor-hint" data-hint="Floor" data-align="left"></div>
+        <div class="slot-target slot-floor-target" data-slot="floor">
+          <div class="slot-contents"></div>
+        </div>
+      </div>
+    </main>
+
+    <footer class="subjects">
+      <img src="/assets/subjectC.png" alt="Subject C" data-subject="Cor">
+      <img src="/assets/subjectE.png" alt="Subject E" data-subject="Emo">
+      <img src="/assets/subjectI.png" alt="Subject I" data-subject="Inw">
+      <img src="/assets/subjectL.png" alt="Subject L" data-subject="Log">
+      <img src="/assets/subjectR.png" alt="Subject R" data-subject="Rep">
+      <img src="/assets/subjectS.png" alt="Subject S" data-subject="Soc">
+    </footer>
+    <div class="actions">
+      <button id="start-sim">Start Simulation</button>
+      <div id="sim-loading" class="hidden">Generating ending...</div>
+      <div id="sim-error" class="sim-error hidden"></div>
+    </div>
+  </div>
+  <script src="app.js"></script>
+</body>
+</html>

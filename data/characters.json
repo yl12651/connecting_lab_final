@@ -1,0 +1,32 @@
+{
+  "Emo": {
+    "image": "assets/subjectE.png",
+    "type": "Subject-E",
+    "description": "The Emotional type. High emotional sensitivity, strong empathy feedback loop; reacts swiftly to group mood swings; used to monitor collective emotional waves."
+  },
+  "Rep": {
+    "image": "assets/subjectR.png",
+    "type": "Subject-R",
+    "description": "The Repulsive type. Low impulse-control threshold; quick to act under stress; designed for crisis-response simulations; reveals how sudden decisions affect controlled environments."
+  },
+  "Soc": {
+    "image": "assets/subjectS.png",
+    "type": "Subject-S",
+    "description": "The Social type. Highly extroverted and persuasive; excels at networking and influence; key to studying opinion spread, crowd dynamics, and viral communication."
+  },
+  "Log": {
+    "image": "assets/subjectL.png",
+    "type": "Subject-L",
+    "description": "The Logical type. Predominantly rational and composed; excels at structured decision-making and calculations; serves as a stabilizing baseline in behavioral experiments."
+  },
+  "Inw": {
+    "image": "assets/subjectI.png",
+    "type": "Subject-I",
+    "description": "The Inward type. Low external energy and visibility; blends into background populations; useful for studying observer bias and unnoticed anomaly detection in simulations."
+  },
+  "Cor": {
+    "image": "assets/subjectC.png",
+    "type": "Subject-C",
+    "description": "The Core type. High and stable life-energy baseline; balanced across emotional, reactive, and social traits; represents the laboratory's ideal equilibrium model for sustaining the controlled world."
+  }
+}
