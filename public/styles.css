@@ -68,7 +68,7 @@ body {
 
   /* debug purpose */
   background: rgba(0, 0, 255, 0.1); 
-  
+
   cursor: pointer;
   display: flex;
   align-items: center;
@@ -87,7 +87,7 @@ body {
 .slot-counter-target {
   top: 30%;
   left: 42%;
-  width: 26%;
+  width: 36%;
   height: 7%;
 }
 
@@ -101,7 +101,7 @@ body {
 .slot-barista-target {
   top: 43%;
   left: 43%;
-  width: 26%;
+  width: 36%;
   height: 7%;
 }
 
@@ -115,7 +115,7 @@ body {
 .slot-kitchen-target {
   top: 56%;
   left: 44%;
-  width: 26%;
+  width: 36%;
   height: 7%;
 }
 
@@ -129,7 +129,7 @@ body {
 .slot-floor-target {
   top: 68%;
   left: 45%;
-  width: 26%;
+  width: 36%;
   height: 7%;
 }
 
