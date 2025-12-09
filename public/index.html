@@ -17,7 +17,7 @@
       </div>
       <div class="intro-dialog" id="intro-dialog">
         <div id="intro-text" class="intro-text"></div>
-        <div class="intro-next">▷</div>
+        <div class="intro-next">▽</div>
       </div>
     </div>
 
@@ -25,6 +25,15 @@
       <div class="spacer"></div>
       <img src="/assets/question_mark.png" alt="Help" class="help-icon" id="help-icon">
     </header>
+
+    <div class="subjects">
+      <img src="/assets/subjectC.png" alt="Subject C" data-subject="Cor">
+      <img src="/assets/subjectE.png" alt="Subject E" data-subject="Emo">
+      <img src="/assets/subjectI.png" alt="Subject I" data-subject="Inw">
+      <img src="/assets/subjectL.png" alt="Subject L" data-subject="Log">
+      <img src="/assets/subjectR.png" alt="Subject R" data-subject="Rep">
+      <img src="/assets/subjectS.png" alt="Subject S" data-subject="Soc">
+    </div>
 
     <main class="main">
       <div class="schedule-wrap">
@@ -51,21 +60,15 @@
           </div>
         </div>
       </div>
+      <div class="actions">
+        <button id="start-sim">Start Simulation</button>
+        <div class="sim-status">
+          <div id="sim-loading" class="hidden">Generating ending...</div>
+          <div id="sim-error" class="sim-error hidden"></div>
+        </div>
+      </div>
     </main>
 
-    <footer class="subjects">
-      <img src="/assets/subjectC.png" alt="Subject C" data-subject="Cor">
-      <img src="/assets/subjectE.png" alt="Subject E" data-subject="Emo">
-      <img src="/assets/subjectI.png" alt="Subject I" data-subject="Inw">
-      <img src="/assets/subjectL.png" alt="Subject L" data-subject="Log">
-      <img src="/assets/subjectR.png" alt="Subject R" data-subject="Rep">
-      <img src="/assets/subjectS.png" alt="Subject S" data-subject="Soc">
-    </footer>
-    <div class="actions">
-      <button id="start-sim">Start Simulation</button>
-      <div id="sim-loading" class="hidden">Generating ending...</div>
-      <div id="sim-error" class="sim-error hidden"></div>
-    </div>
   </div>
   <script src="app.js"></script>
 </body>

@@ -8,14 +8,15 @@ let nextDragId = 0;
 let simulateButton;
 let simulateLoading;
 let simulateError;
+let actionsContainer;
 let isSimulating = false;
 let HELP_HINT_TEXT = 
   'Welcome to The Lumen Café!\n\nHover subjects for descriptions, and drag and drop to assign them to a position;\n\nPlay around the arrangement with your friends and start Simulation to generate an ending when you are ready!\n\nP.S. One slot should only have at most four staff members at the same time because we can\'t afford it!\n\nP.P.S. No subjects are harmed in the making of this simulation.';
 let introLines = [
-  'Hey there! I am your guide for The Cafeteria.',
-  'Hover each subject to learn their traits, then drag them onto the schedule slots.',
-  'When you are ready, click Start Simulation to see how your arrangement plays out.',
-  'Let\'s get you started.'
+  'Clotho: Hey there! I am your guide for The Lumen Café!',
+  'Clotho: Hover each subject to learn their traits, then drag them onto the schedule slots.',
+  'Clotho: When you (and your friends) are ready, click the Start Simulation button to see how your arrangement plays out.',
+  'Clotho: Let\'s get you started~'
 ];
 let introIndex = 0;
 let introOverlay;
@@ -420,6 +421,7 @@ function initIntroOverlay() {
   if (!introDebugForce && localStorage.getItem('cafeteria_intro_seen') === '1') {
     introOverlay.classList.add('hidden');
     introOverlay.style.display = 'none';
+    if (actionsContainer) actionsContainer.classList.remove('hidden');
     return;
   }
 
@@ -427,7 +429,8 @@ function initIntroOverlay() {
   introText.textContent = introLines[introIndex] || '';
   introOverlay.classList.remove('hidden');
   introOverlay.style.display = 'flex';
-  introDialog.addEventListener('click', advanceIntro);
+  if (actionsContainer) actionsContainer.classList.add('hidden');
+  introOverlay.addEventListener('click', advanceIntro);
 }
 
 function advanceIntro() {
@@ -438,6 +441,7 @@ function advanceIntro() {
     localStorage.setItem('cafeteria_intro_seen', '1');
     introOverlay.classList.add('hidden');
     introOverlay.style.display = 'none';
+    if (actionsContainer) actionsContainer.classList.remove('hidden');
     introDialog.removeEventListener('click', advanceIntro);
   }
 }
@@ -496,6 +500,7 @@ function setup() {
   introOverlay = document.getElementById('intro-overlay');
   introText = document.getElementById('intro-text');
   introDialog = document.getElementById('intro-dialog');
+  actionsContainer = document.querySelector('.actions');
 
   if (simulateButton) {
     simulateButton.addEventListener('click', runSimulation);

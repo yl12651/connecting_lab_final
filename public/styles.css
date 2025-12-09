@@ -10,8 +10,8 @@ button,
 
 body {
   margin: 0;
-  padding: 32px;
-  background: #fff;
+  padding: 32px 32px 0px 32px;
+  background: rgb(10, 10, 10);
   font-family: 'AvantGarde Demi', Arial, sans-serif;
 }
 
@@ -37,17 +37,19 @@ body {
 }
 
 .help-icon {
-  width: 48px;
-  height: 48px;
+  width: 45px;
+  height: 45px;
   object-fit: contain;
+  filter: invert(100%);
 }
 
 .main {
   order: 2;
   flex: 1;
   display: flex;
-  align-items: flex-start;
-  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
   padding: 0px;
 }
 
@@ -57,7 +59,6 @@ body {
   max-height: 70vh;
   height: auto;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-  border: 1px solid #000;
 }
 
 .schedule-wrap {
@@ -98,7 +99,7 @@ body {
 }
 
 .slot-counter-hint {
-  top: 39%;
+  top: 38.5%;
   left: 32%;
   width: 8%;
   height: 7%;
@@ -133,21 +134,21 @@ body {
 }
 
 .slot-kitchen-target {
-  top: 61%;
+  top: 61.5%;
   left: 41.5%;
   width: 36%;
   height: 7%;
 }
 
 .slot-floor-hint {
-  top: 74.5%;
+  top: 75%;
   left: 33.5%;
   width: 8%;
   height: 7%;
 }
 
 .slot-floor-target {
-  top: 73%;
+  top: 73.5%;
   left: 42%;
   width: 36%;
   height: 7%;
@@ -185,7 +186,7 @@ body {
   justify-content: center;
   gap: 16px;
   padding:0px;
-  margin-bottom: 18px;
+  margin-bottom: 0px;
   margin-top: 18px;
 }
 
@@ -193,13 +194,11 @@ body {
   width: 100px;
   height: auto;
   object-fit: contain;
-  border: 1px solid #000;
 }
 
 .hint-box {
   position: absolute;
   background: #fff;
-  border: 1px solid #000;
   padding: 8px 10px;
   max-width: 260px;
   font-size: 14px;
@@ -208,6 +207,7 @@ body {
   z-index: 10;
   /* enable new-line literals */
   white-space: pre-wrap; 
+  border: 1px solid black;
 }
 
 .hidden {
@@ -217,11 +217,11 @@ body {
 .intro-overlay {
   position: fixed;
   inset: 0;
-  background: rgba(0, 0, 0, 0.45);
+  background: rgba(10, 10, 10, 0.7);
   display: flex;
   align-items: flex-end;
   justify-content: center;
-  z-index: 30;
+  z-index: 10;
   pointer-events: auto;
 }
 
@@ -229,62 +229,90 @@ body {
   position: absolute;
   right: -120px;
   bottom: -350px;
+  z-index: 11;
 }
 
 .intro-img {
   max-height: 120vh;
   width: auto;
   display: block;
+  z-index: 11;
 }
 
 .intro-dialog {
   position: absolute;
-  bottom: 150px;
-  left: 40%;
-  transform: translateX(-50%);
-  background: #fff;
-  border: 2px solid #000;
-  padding: 16px 18px 18px;
-  max-width: 720px;
-  width: 90%;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 320px;
+  background: linear-gradient(
+    0deg,
+    rgba(0, 0, 0, 0.9) 0px,
+    rgba(0, 0, 0, 0.9) 100px,
+    rgba(0, 0, 0, 0) 80%
+  );
+  padding: 32px 32px 42px;
+  width: 100%;
   cursor: pointer;
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-start;
+  z-index: 11;
+  position: relative;
 }
 
 .intro-text {
   font-size: 24px;
   line-height: 1.5;
   white-space: pre-wrap;
-  color: #111;
+  color: #ffffff;
+  max-width: 1000px;
+  margin-left: 400px;
+  flex: 0 0 auto;
 }
 
 .intro-next {
-  text-align: right;
-  font-size: 15px;
-  color: #333;
-  margin-top: 8px;
+  position: absolute;
+  left: 1450px;
+  bottom: 20px;
+  font-size: 20px;
+  color: #ffffff;
 }
 
 .actions {
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 12px;
+  gap: 6px;
   padding: 0px;
 }
 
 #start-sim {
+  background-color: #B9D33C;
   padding: 10px 16px;
   font-size: 16px;
   cursor: pointer;
-  border: 1px solid #000;
 }
 
 #sim-loading {
+  color: white;
+  font-size: 14px;
+  margin-top: 4px;
+}
+
+.sim-status {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#sim-loading {
+  color: white;
   font-size: 14px;
 }
 
 .sim-error {
-  color: #b00020;
+  color: rgb(255, 65, 65);
   font-size: 14px;
 }
