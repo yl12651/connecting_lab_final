@@ -27,7 +27,7 @@ let introText;
 let introDialog;
 
 // local debug override
-let introDebugForce = true;
+let introDebugForce = false;
 
 /* 
   Hovering hint related utilities.
