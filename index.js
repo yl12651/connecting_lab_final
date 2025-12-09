@@ -118,7 +118,7 @@ function applySlotUpdate(payload = {}) {
   }
 }
 
-// All socket.io events including slot updates and drag ghosting
+// All socket.io events related to slot updates and drag ghosting
 io.on('connection', (socket) => {
   console.log(`Client connected: ${socket.id}`);
 
@@ -158,18 +158,25 @@ app.use(express.json({ limit: '1mb' }));
 app.post('/api/simulate', async (req, res) => {
   let OPENAI_API_KEY = process.env.OPENAI_API_KEY;
   if (!OPENAI_API_KEY) {
+    io.emit('sim:error', { message: 'OpenAI API key not configured' });
     return res.status(500).json({ error: 'OpenAI API key not configured' });
   }
 
   try {
-    console.log('simulate: current slot state', JSON.stringify(slotState, null, 2));
+    io.emit('sim:pending');
+
+    let toInsert = JSON.stringify(slotState, null, 2);
+
+    // debug purpose
+    console.log('simulate: current slot state', toInsert);
+
     // build the prompt from data/ending_prompt.md
     // dynamically insert the current slot state as JSON
     let promptTemplate = `
       ${require('fs').readFileSync(require('path').join(__dirname, 'data/ending_prompt.md'), 'utf8')}
       `.trim();
 
-    let prompt = promptTemplate.replace('{{SLOT_STATE_JSON}}', JSON.stringify(slotState, null, 2));
+    let prompt = promptTemplate.replace('{{SLOT_STATE_JSON}}', toInsert);
 
     let completionRes = await fetch('https://api.openai.com/v1/chat/completions', {
       method: 'POST',
@@ -186,13 +193,15 @@ app.post('/api/simulate', async (req, res) => {
 
     if (!completionRes.ok) {
       let text = await completionRes.text();
+      io.emit('sim:error', { message: 'OpenAI request failed', details: text });
       return res.status(500).json({ error: 'OpenAI request failed', details: text });
     }
 
+    // grab result from OpenAI API response
     let data = await completionRes.json();
-    let endingText = data.choices?.[0]?.message?.content || '';
+    let endingText = data.choices[0].message.content;
 
-    // clear state and notify clients
+    // clear state and broadcast gpt response to clients to jump to ending page
     slotState = {
       counter: [],
       barista: [],
@@ -200,14 +209,16 @@ app.post('/api/simulate', async (req, res) => {
       floor: [],
     };
     io.emit('slot:sync', slotState);
+    io.emit('sim:done', { ending: endingText });
 
     return res.json({ ending: endingText });
   } catch (err) {
     console.error('simulate error', err);
+    io.emit('sim:error', { message: 'Simulation failed', details: err.message });
     return res.status(500).json({ error: 'Simulation failed', details: err.message });
   }
 });
 
 server.listen(port, () => {
-  console.log(`The Cafeteria listening on port ${port}`);
+  console.log(`The Lumen Café listening on port ${port}`);
 });

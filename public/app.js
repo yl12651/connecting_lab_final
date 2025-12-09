@@ -8,9 +8,23 @@ let nextDragId = 0;
 let simulateButton;
 let simulateLoading;
 let simulateError;
+let isSimulating = false;
+let HELP_HINT_TEXT = 
+  'Welcome to The Lumen Café!\n\nHover subjects for descriptions, and drag and drop to assign them to a position;\n\nPlay around the arrangement with your friends and start Simulation to generate an ending when you are ready!\n\nP.S. One slot should only have at most four staff members at the same time because we can\'t afford it!\n\nP.P.S. No subjects are harmed in the making of this simulation.';
+let introLines = [
+  'Hey there! I am your guide for The Cafeteria.',
+  'Hover each subject to learn their traits, then drag them onto the schedule slots.',
+  'When you are ready, click Start Simulation to see how your arrangement plays out.',
+  'Let\'s get you started.'
+];
+let introIndex = 0;
+let introOverlay;
+let introText;
+let introDialog;
 
 /* 
-  Hint-related utilities
+  Hovering hint related utilities.
+  Automatically attach hint boxes to target elements with respective to their positions.
 */
 
 // position a hint box relative to a target element
@@ -27,7 +41,7 @@ function positionHint(element, box, alignment) {
     let boxHeight = boxRect.height;
     let boxWidth = boxRect.width;
     box.style.left = `${rect.left + scrollLeft - boxWidth - 8}px`;
-    box.style.top = `${rect.top + scrollTop + rect.height / 2 - boxHeight / 2}px`;
+    box.style.top = `${rect.top + scrollTop}px`;
   } else {
     box.style.left = `${rect.left + scrollLeft}px`;
     box.style.top = `${rect.bottom + scrollTop + 8}px`;
@@ -56,7 +70,9 @@ function attachHoverHints(targets, getText, getAlign) {
 }
 
 /* 
-  Drag and drop utilities; slot state management
+  Drag and drop utilities; 
+  Slot state update and syncing management.
+  Rendering of drag ghosts and placed items.
 */
 
 // add an item to a slot (returns item id if placed)
@@ -322,13 +338,118 @@ function loadSubjectData() {
     });
 }
 
-// initialize hints after the page loads
+/*
+  Simulation API endpoint interaction
+*/
+
+// trigger simulation
+async function runSimulation() {
+  if (!simulateButton) return;
+  if (isSimulating) return;
+
+  // send the request and will be driven by socket events
+  try {
+    let res = await fetch('/api/simulate', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({}),
+    });
+    if (!res.ok) {
+      let text = await res.text();
+      throw new Error(text || 'Simulation failed');
+    }
+    // success case is handled by sim:pending / sim:done events
+  } catch (err) {
+    // only for network or HTTP errors
+    if (simulateError) {
+      simulateError.textContent = err.message || 'Simulation failed';
+      simulateError.classList.remove('hidden');
+    }
+  }
+}
+
+// simulation state handlers driven by socket events
+function handleSimPending() {
+  setSimulating(true);
+}
+
+function handleSimDone(payload) {
+  setSimulating(false);
+  if (simulateError) {
+    simulateError.textContent = '';
+    simulateError.classList.add('hidden');
+  }
+  let ending = (payload && payload.ending) || 'No ending generated.';
+  sessionStorage.setItem('cafeteria_ending', ending);
+  window.location.href = '/ending.html';
+}
+
+function handleSimError(payload) {
+  setSimulating(false);
+  let message = (payload && payload.message) || 'Simulation failed';
+  if (simulateError) {
+    simulateError.textContent = message;
+    simulateError.classList.remove('hidden');
+  }
+}
+
+function setSimulating(isOn) {
+  isSimulating = isOn;
+
+  if (simulateLoading) {
+    simulateLoading.classList.toggle('hidden', !isOn);
+  }
+
+  if (simulateButton) {
+    simulateButton.disabled = isOn;
+  }
+}
+
+/*
+  Landing intro dialog overlay logic
+  Only shown if not seen before
+*/
+
+function initIntroOverlay() {
+  if (!introOverlay || !introText || !introDialog) return;
+
+  // local debug override
+  let introDebugForce = false;
+
+  // use localStorage flag so it is universal for all users on the same browser on the system
+  if (!introDebugForce && localStorage.getItem('cafeteria_intro_seen') === '1') {
+    introOverlay.classList.add('hidden');
+    introOverlay.style.display = 'none';
+    return;
+  }
+
+  introIndex = 0;
+  introText.textContent = introLines[introIndex] || '';
+  introOverlay.classList.remove('hidden');
+  introOverlay.style.display = 'flex';
+  introDialog.addEventListener('click', advanceIntro);
+}
+
+function advanceIntro() {
+  introIndex += 1;
+  if (introIndex < introLines.length) {
+    introText.textContent = introLines[introIndex];
+  } else {
+    localStorage.setItem('cafeteria_intro_seen', '1');
+    introOverlay.classList.add('hidden');
+    introOverlay.style.display = 'none';
+    introDialog.removeEventListener('click', advanceIntro);
+  }
+}
+
+// initialize ui, sockets, and hints after the page loads
 function setup() {
+  noCanvas();
   loadSubjectData();
 
   const helpIcon = document.getElementById('help-icon');
   if (helpIcon) {
-    attachHoverHints([helpIcon], () => 'Placeholder hint text will go here.', () => 'left');
+    attachHoverHints([helpIcon], () => HELP_HINT_TEXT, () => 'left');
   }
 
   const subjectImages = Array.from(document.querySelectorAll('.subjects img'));
@@ -365,51 +486,20 @@ function setup() {
   socket.on('slot:sync', (snapshot) => {
     syncSlots(snapshot);
   });
+  socket.on('sim:pending', handleSimPending);
+  socket.on('sim:done', handleSimDone);
+  socket.on('sim:error', handleSimError);
 
   simulateButton = document.getElementById('start-sim');
   simulateLoading = document.getElementById('sim-loading');
   simulateError = document.getElementById('sim-error');
+  introOverlay = document.getElementById('intro-overlay');
+  introText = document.getElementById('intro-text');
+  introDialog = document.getElementById('intro-dialog');
 
   if (simulateButton) {
     simulateButton.addEventListener('click', runSimulation);
   }
-}
 
-/*
-  Simulation API endpoint interaction
-*/
-
-// trigger simulation
-async function runSimulation() {
-  if (!simulateButton) return;
-  simulateButton.disabled = true;
-  if (simulateLoading) simulateLoading.classList.remove('hidden');
-  if (simulateError) {
-    simulateError.textContent = '';
-    simulateError.classList.add('hidden');
-  }
-
-  try {
-    let res = await fetch('/api/simulate', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({}),
-    });
-    if (!res.ok) {
-      let text = await res.text();
-      throw new Error(text || 'Simulation failed');
-    }
-    let data = await res.json();
-    let ending = data.ending || 'No ending generated.';
-    sessionStorage.setItem('cafeteria_ending', ending);
-    window.location.href = '/ending.html';
-  } catch (err) {
-    if (simulateError) {
-      simulateError.textContent = err.message || 'Simulation failed';
-      simulateError.classList.remove('hidden');
-    }
-  } finally {
-    if (simulateLoading) simulateLoading.classList.add('hidden');
-    simulateButton.disabled = false;
-  }
+  initIntroOverlay();
 }

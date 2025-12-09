@@ -26,12 +26,17 @@ This JSON is dynamically inserted into the prompt at runtime:
 - A slot may contain multiple entries or be empty.  
 - This arrangement is **the main driver** of the ending narrative.
 
-**Hard rules:**
+### Hard Rules (Revised)
 
-- If a slot array is empty (`[]`), that means there are **no staff at all** in that role.
-- You must **not invent or imply any character or personality type** working in a slot whose array is empty.
-- You may describe staff only where the JSON lists items.
-- You may only use the personality types that actually appear in the JSON; do not introduce additional Emo/Rep/Soc/Log/Inw/Cor characters that aren’t listed.
+- If a slot array is empty (`[]`), that means there are **no staff at all** in that role.  
+- You must **not invent, imply, or indirectly assume** any staff behavior associated with an empty role.  
+  - If `barista` is empty: **no drink-making, no espresso machine activity, no barista-like interactions.**  
+  - If `kitchen` is empty: **no food preparation, no trays being assembled, no coordinated production.**  
+  - If `floor` is empty: **no circulating staff, no clearing tables, no guided seating.**  
+  - If `counter` is empty: **no greetings, no order intake, no counter service activity.**
+- You may describe **environmental consequences** of empty roles (e.g., confusion, delays, silence, self-service improvisation).
+- You must only use personality types actually present in the JSON; do **not** introduce additional Emo/Rep/Soc/Log/Inw/Cor characters.
+- **Every empty slot must visibly affect the scene.**
 
 ### 2. Personality definitions
 Use these descriptions to interpret how each character behaves and interacts:
@@ -54,56 +59,65 @@ Use these descriptions to interpret how each character behaves and interacts:
 Use the arrangement as the *primary* influence on the outcome.
 
 ### Role Effects
-- **Counter:** shapes first impressions, queue dynamics, emotional “entry point.”  
-- **Barista:** influences pacing, micro-interactions, small talk, rhythm of orders.  
-- **Kitchen:** affects backstage stability, crisis handling, and internal decision flow.  
-- **Floor:** governs social atmosphere, noise levels, diffusion or escalation of tension.
+- **Counter:** shapes first impressions and emotional “entry points.”  
+- **Barista:** shapes rhythm, pacing, and the social texture of service.  
+- **Kitchen:** determines stability, crisis response, and food availability.  
+- **Floor:** governs social flow, atmosphere, and visible activity.
 
 ### Trait Heuristics
-- **Emo:** amplifies emotional climate; stabilizes with calm types, volatile with reactive ones.  
-- **Rep:** impulsive, crisis-reactive; may trigger chain reactions under stress.  
-- **Soc:** spreads influence and mood; can unify or divide groups.  
-- **Log:** stabilizing; optimizes flow; reduces drama but may create subtle tensions.  
-- **Inw:** quiet, nearly invisible; changes the environment indirectly through presence/absence.  
-- **Cor:** strongly stabilizing; dampens extremes; promotes equilibrium.
+- **Emo:** amplifies emotional climate; stable with calm types, reactive with stressed ones.  
+- **Rep:** impulsive, crisis-reactive; can destabilize or energize.  
+- **Soc:** spreads influence and mood; unifies or divides.  
+- **Log:** organized, precise, quietly steadying.  
+- **Inw:** subtle presence; influences the environment through absence, silence, or observation.  
+- **Cor:** balancing force; reduces extremes and stabilizes mood.
 
 ### Interactions to Consider
-- Multiple characters in the same slot.  
-- Cross-role interactions such as Rep-in-kitchen vs Log-at-counter.  
-- Empty slots should meaningfully alter the ending.
+- Multiple characters in a single slot.  
+- Influences between roles (e.g., highly emotional counter + highly reactive kitchen).  
+- **Empty slots must have visible, concrete consequences.**
 
-When the same configuration appears again, with large possibility the *general outcome* should remain consistent, but small variations and changes are allowed. In rare occasions it is also acceptable that something out-of-the-box happened and tne ending is different.
+### Empty Slot Consequences (New Section)
 
-**Special edge case: all slots empty**
+For each empty slot, reflect its absence clearly:
 
-- If `counter`, `barista`, `kitchen`, and `floor` are *all* empty arrays, you must write an ending in which:
-  - No staff ever show up to work that day.
-  - The café either does not open, opens briefly then fails, or remains an eerie, unattended space.
-  - You still describe a few concrete details (e.g. lights, chairs, potential customers who turn away, or the space as part of a failed experiment), but you must not introduce any staff characters or personality types.
-  - In such cases, a shorter ending output is also acceptable.
+- **Empty counter:** customers hesitate; no greetings; uncertainty at entry.  
+- **Empty barista:** no drinks are made; service feels incomplete.  
+- **Empty kitchen:** no food is produced; offerings become limited or nonexistent.  
+- **Empty floor:** no clearing, no social mediation; the space becomes static or neglected.
+
+**These consequences must appear explicitly in the ending.**
 
 ---
 
-## Style & Output Requirements
+### Special edge case: all slots empty
 
-- **Length:** 220–350 words  
-- **Perspective:** Third-person, lightly observational  
-- **Tone:** Quiet, grounded, speculative; focused on small daily events  
-- **Content Focus:**  
-  - Provide 2–4 micro-scenes arising from the arrangement  
-  - End with 1–3 reflective lines about what the day reveals  
-- **Consistency Rules:**  
-  - Balanced setups → stable, nuanced, mildly bittersweet endings  
-  - Volatile setups → tension, near-mishaps, fragile order, small failures  
-  - Always café-scaled; never epic  
-  - Include trade-offs or unintended side-effects  
+When `counter`, `barista`, `kitchen`, and `floor` are all empty:
+
+- No staff appear at any point.  
+- The café does not operate, or opens briefly before failing.  
+- Describe only environmental details (lights, chairs, passerby reactions).  
+- Keep the ending short.
+
+---
+
+## Style & Output Requirements (Revised)
+
+- **Length:** 100–180 words  
+- **Perspective:** Third-person, concrete and easy to follow  
+- **Tone:** Clear, grounded, minimally poetic  
+- **Focus:**  
+  - Describe **1–2 short moments** shaped by the characters who *are* present  
+  - Show **explicit consequences** of missing roles  
+- **Ending:** Conclude with **one short reflective line** about what this configuration reveals
 
 ### Prohibited
 
-- You must **not** introduce any staff member or personality type in a role whose slot array is empty.
-- No mention of JSON, “roles,” “the player,” or system reasoning  
+- No invented staff or staff-like actions when a slot is empty  
+- No metaphors so abstract that the scene becomes unclear  
+- No mention of JSON, roles, players, or reasoning  
 - Do not explain your logic  
-- Output only normal prose paragraphs—no headings in the final answer  
+- Output only normal narrative paragraphs (no headings)
 
 ---
 
