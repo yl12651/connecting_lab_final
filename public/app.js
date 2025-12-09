@@ -13,10 +13,13 @@ let isSimulating = false;
 let HELP_HINT_TEXT = 
   'Welcome to The Lumen Café!\n\nHover subjects for descriptions, and drag and drop to assign them to a position;\n\nPlay around the arrangement with your friends and start Simulation to generate an ending when you are ready!\n\nP.S. One slot should only have at most four staff members at the same time because we can\'t afford it!\n\nP.P.S. No subjects are harmed in the making of this simulation.';
 let introLines = [
-  'Clotho: Hey there! I am your guide for The Lumen Café!',
-  'Clotho: Hover each subject to learn their traits, then drag them onto the schedule slots.',
-  'Clotho: When you (and your friends) are ready, click the Start Simulation button to see how your arrangement plays out.',
-  'Clotho: Let\'s get you started~'
+  'Clotho: Hey there! Welcome to The Lumen Café!',
+  "Clotho: Oooh… you already squeezed those little subjects into existence? Not bad for a first-timer.",
+  "Clotho: C'mon, show me. Let me see how you plan to use them~",
+  "Clotho: Each one comes with their own personality, you know. Emo, Rep, Log… they all behave differently if you stick them in the wrong place.",
+  "Clotho: And these roles? Counter is for handling customers, Barista sets the pace, Kitchen keeps things running, and Floor stops the café from turning into a mess.",
+  "Clotho: So… talk it over with your friends, okay? I wanna see where you think each of them fits.",
+  "Clotho: Don't disappoint me now~"
 ];
 let introIndex = 0;
 let introOverlay;
