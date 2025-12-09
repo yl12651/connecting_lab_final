@@ -2,16 +2,22 @@
   box-sizing: border-box;
 }
 
+.page,
+button,
+.hint-box {
+  font-family: 'AvantGarde Demi', Arial, sans-serif;
+}
+
 body {
   margin: 0;
   padding: 32px;
   background: #fff;
-  font-family: 'AvantGrande Demi', Arial, sans-serif;
+  font-family: 'AvantGarde Demi', Arial, sans-serif;
 }
 
 @font-face {
-  font-family: 'AvantGrande Demi';
-  src: url('/assets/AvantGrande-Demi.otf') format('opentype');
+  font-family: 'AvantGarde Demi';
+  src: url('/assets/AvantGarde-Demi.otf') format('opentype');
   font-weight: normal;
   font-style: normal;
   font-display: swap;

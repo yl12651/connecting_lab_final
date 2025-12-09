@@ -22,6 +22,9 @@ let introOverlay;
 let introText;
 let introDialog;
 
+// local debug override
+let introDebugForce = true;
+
 /* 
   Hovering hint related utilities.
   Automatically attach hint boxes to target elements with respective to their positions.
@@ -412,9 +415,6 @@ function setSimulating(isOn) {
 
 function initIntroOverlay() {
   if (!introOverlay || !introText || !introDialog) return;
-
-  // local debug override
-  let introDebugForce = false;
 
   // use localStorage flag so it is universal for all users on the same browser on the system
   if (!introDebugForce && localStorage.getItem('cafeteria_intro_seen') === '1') {
